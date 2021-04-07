@@ -4,12 +4,14 @@ date: 2021-04-07 19:55:37
 tags:
 ---
 <!-- more -->
-	在
+在vue.mixin中添加
+  ``` js
 	componentHeight: 0,
 	componentWidth: 0,
-中
+  ```
+  mounted中添加
+  ``` js
     mounted: function() {
-    // TODO: how to recalculate the component height?
     if (this.$options.calcHeight) {
       this.calcHeight()
       const resizeHandler = util.debounce(() => {
@@ -20,10 +22,11 @@ tags:
         window.removeEventListener('resize', resizeHandler)
       })
     }
-  },
-
-   methods: 中
-       calcHeight() {
+  }
+  ```
+  methods中添加
+```js
+    calcHeight() {
       if (!this.$options.calcHeight) {
         return
       }
@@ -41,15 +44,12 @@ tags:
           }
         }
       }, 10)
-      // 因为可能存在组件初始化后在短时间被销毁，或者在一定时机触发这个计算时，组件正在销毁中，不能让这个引用导致内存溢出
-      // 还有一种可能是连续调用计算高度，未清除上一个还在计算的timer
     },
-
-
-
-    引入一个插件js
-    export default {
-   debounce (func, wait) {
+```
+引入一个插件js
+```js
+export default {
+  debounce (func, wait) {
     let timeout, args, context, timestamp, result
     const later = () => {
       const last = Date.now() - timestamp
@@ -72,9 +72,5 @@ tags:
     }
   } 
 } 
-
-在页面中
-calcHeight:true,设置
-便可以监控到componentHeight
-
-![](calcHeight/1.jpg)
+```
+接下来在需要使用计算的页面中设置`calcHeight:true`,然后便可以监控到`componentHeight`的变化
