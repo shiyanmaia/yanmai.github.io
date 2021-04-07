@@ -3,6 +3,7 @@ title: vue响应式自适应高度
 date: 2021-04-07 19:55:37
 tags:
 ---
+解决vue中组件不能实时更新高度问题
 <!-- more -->
 在vue.mixin中添加
   ``` js

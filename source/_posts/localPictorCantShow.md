@@ -3,7 +3,7 @@ title: 本地图片不显示问题
 date: 2021-04-07 22:54:11
 tags:
 ---
-今天想测试使用md加入图片，结果发现路径会出错，后续查百度是说由于hexo的版本升级后导致路径不对，可以使用hexo-asset-image插件来解决这个问题，但是需要修改部分内容。将修改好的仓库代码fork到了自己的git仓库，使用
+今天想测试使用md加入图片，结果发现路径会出错，后续查百度是说由于hexo的版本升级后导致路径不对，可以使用hexo-asset-image插件来解决这个问题，但是需要修改部分内容。<!-- more -->将修改好的仓库代码fork到了自己的git仓库，使用
 
 `npm install https://github.com/shiyanmaia/hexo-asset-image.git --save`
 
