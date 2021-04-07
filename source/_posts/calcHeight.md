@@ -2,6 +2,7 @@
 title: vue响应式自适应高度
 date: 2021-04-07 19:55:37
 tags:
+categories: 前端样式问题
 ---
 解决vue中组件不能实时更新高度问题
 <!-- more -->
