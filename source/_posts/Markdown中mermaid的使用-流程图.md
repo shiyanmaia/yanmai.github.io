@@ -6,7 +6,7 @@ mermaid: true
 ---
 Markdown 语法并不直接支持画图
 但是可以引入mermaid插件
-
+<!-- more -->
 ```markdown
 ```mermaid
 graph LR;

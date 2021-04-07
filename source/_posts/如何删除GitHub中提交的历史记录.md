@@ -7,7 +7,7 @@ categories: gitHub的使用
 ---
 删除.git文件夹可能会导致git存储库中的问题
 如果要删除所有提交历史记录，但将代码保持在当前状态，可以按照以下方式安全地执行此操作：
-
+<!-- more -->
 ``` JS
 git checkout --orphan latest_branch // 尝试  运行  
 git add -A // 添加所有文件
