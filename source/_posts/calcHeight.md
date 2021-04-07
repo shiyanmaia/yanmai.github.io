@@ -76,3 +76,5 @@ tags:
 在页面中
 calcHeight:true,设置
 便可以监控到componentHeight
+
+![](calcHeight/1.jpg)
