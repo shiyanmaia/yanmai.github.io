@@ -12,20 +12,21 @@ categories: 前端样式问题
 	componentWidth: 0,
   ```
   mounted中添加
-  ``` js
+```js
     mounted: function() {
-    if (this.$options.calcHeight) {
-      this.calcHeight()
-      const resizeHandler = util.debounce(() => {
-        this.calcHeight()
-      }, 200)
-      window.addEventListener('resize', resizeHandler)
-      this.$on('hook:beforeDestroy', () => {
-        window.removeEventListener('resize', resizeHandler)
-      })
+        if (this.$options.calcHeight) {
+            this.calcHeight()
+            const resizeHandler = util.debounce(() => {
+                this.calcHeight()
+            }, 200)
+            window.addEventListener('resize', resizeHandler)
+            this.$on('hook:beforeDestroy', () => {
+                window.removeEventListener('resize', resizeHandler)
+            })
+        }
     }
-  }
-  ```
+```
+
   methods中添加
 ```js
     calcHeight() {
