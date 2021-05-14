@@ -6,6 +6,8 @@ tags:
 
 前端通用的copy方法:
 
+<!-- more -->
+
 ```js
 copyUrl() {
     const aux = document.createElement('input')
