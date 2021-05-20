@@ -3,7 +3,8 @@ title: vue-element-admin后台权限
 date: 2021-05-19 20:23:46
 tags:
 ---
-  <img src="premission-js\23AF2A5B.png" alt="img" style="zoom:50%;" />主要学习文档：https://juejin.cn/post/6844903478880370701
+
+★主要学习文档：https://juejin.cn/post/6844903478880370701
 
 <!-- more -->
 
