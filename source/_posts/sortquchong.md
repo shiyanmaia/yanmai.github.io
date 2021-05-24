@@ -6,6 +6,8 @@ tags:
 
 两个函数
 
+<!-- more -->
+
 ```js
 const deteleObject = (obj) => {
     let uniques = []
