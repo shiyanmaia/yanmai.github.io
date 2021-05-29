@@ -93,7 +93,7 @@ aplayer:  # 音乐播放器，注意不能与 hexo-tag-aplayer 插件共用
   order: 'random'  # 播放顺序，可选值: 'list', 'random'
   theme: '#3c4858'  # 主题色
   songs:  # 歌曲列表，必须传入下列各参数，其中 url 与 cover 在本地需存于 source 目录，更多参数见文档：https://aplayer.js.org/#/zh-Hans/?id=%E5%8F%82%E6%95%B0
-    - { name: 'Mood (Lil Ghost Remix)', artist: '24kGoldn/iann dior/Lil Ghost', url: 'https://m701.music.126.net/20210530042033/eeac961138c470d785f1860ed66f0c96/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/8698724416/99ca/2f5f/8c41/cb3c3756d5252af67e121e7bdb6e9eb7.mp3', cover: '//p1.music.126.net/Ggpf7jURLCUKKlT4qAUW4Q==/109951165929809633.jpg?param=90y90' }
+    - { name: 'Mood (Lil Ghost Remix)', artist: '24kGoldn/iann dior/Lil Ghost', url: 'https://m801.music.126.net/20210530052838/bbe480d9d0bafc938980ca66808cee2a/jdyyaac/obj/w5rDlsOJwrLDjj7CmsOj/8698723658/63d4/2446/ae0d/788e204c24f3497eb896a9112fa6baac.m4a', cover: '//p1.music.126.net/Ggpf7jURLCUKKlT4qAUW4Q==/109951165929809633.jpg?param=90y90' }
     # - { name: 'name', artist: 'artist', url: 'https://...url.mp3', cover: 'https://...cover.jpg' }
 
 version:  # 主题版本相关
