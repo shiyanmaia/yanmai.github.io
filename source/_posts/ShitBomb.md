@@ -29,7 +29,7 @@ tags:
 
 ## 具体实现
 
-### 1.丢炸弹
+#### 1.丢炸弹
 
 现在假设我们的炸弹是一个 10px * 10px 的小方块，设置起始点为（300，300）终点为 （0，100） H=100，此时我们得到的二次函数为：
 $$
@@ -99,3 +99,33 @@ var tween = new TWEEN.Tween(coords)
 
 </html>
 ```
+
+#### 2.炸弹爆炸
+
+```js
+<script src="https://cdn.bootcdn.net/ajax/libs/lottie-web/5.7.8/lottie.min.js"></script>
+</head>
+<body>
+<div class="bodymovin"></div>
+<script>
+    const animation = window.bodymovin.loadAnimation({
+        container: document.querySelector('.bodymovin'), // 要包含该动画的dom元素
+        renderer: 'svg', // 渲染方式，svg、canvas、html（轻量版仅svg渲染）
+        loop: true, // 是否循环播放
+        autoplay: true, // 是否自动播放
+        path: './bomb.json', // 动画json文件路径
+    });
+</script>
+```
+
+因此我们只需要在抛物线完成后再立即调用爆炸特效，而`tween.js` 也给我提供了事件方法`onComplete`。我们只需要在`onComplete`回调中，让爆炸动画开始。
+
+```js
+tween.onComplete(function() {  
+    // 写爆炸动画
+})
+```
+
+#### 3.粑粑被炸开
+
+具体链接：https://juejin.cn/post/6969401491853410312
