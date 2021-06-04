@@ -41,7 +41,7 @@ var banner_mask_alpha = page.banner_mask_alpha || theme.index.banner_mask_alpha
   </header>
 
   <main>
-    <% if(is_post() || page.layout == '404') { %>
+    <% if(is_post() || page.layout == '404' ||  page.layout == 'demo') { %>
       <%- body %>
     <% } else { %>
       <div class="container nopadding-md">
