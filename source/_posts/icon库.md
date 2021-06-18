@@ -17,6 +17,4 @@ icon组件库 xicons [www.xicons.org/#/](https://www.xicons.org/#/)
 
 **Glyphs**图标，你就可以接触到成千上万的图标，而且它们都是完全可编辑的。这意味着你可以定制你的图标的外观和感觉，以完美匹配你的品牌。你会得到1500多个已分类、易于使用和完全可编辑的glyphs图标。
 
-![glyphs](https://cssauthor.com/wp-content/uploads/2021/06/glyphs.jpg)
-
 [来源](https://glyphs.fyi/)
