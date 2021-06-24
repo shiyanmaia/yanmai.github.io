@@ -29,7 +29,7 @@ tags:
 
 ## 具体实现
 
-#### 1.丢炸弹
+### 1.丢炸弹
 
 现在假设我们的炸弹是一个 10px * 10px 的小方块，设置起始点为（300，300）终点为 （0，100） H=100，此时我们得到的二次函数为：
 $$
@@ -100,7 +100,7 @@ var tween = new TWEEN.Tween(coords)
 </html>
 ```
 
-#### 2.炸弹爆炸
+### 2.炸弹爆炸
 
 ```js
 <script src="https://cdn.bootcdn.net/ajax/libs/lottie-web/5.7.8/lottie.min.js"></script>
@@ -126,6 +126,6 @@ tween.onComplete(function() {
 })
 ```
 
-#### 3.粑粑被炸开
+### 3.粑粑被炸开
 
-具体链接：https://juejin.cn/post/6969401491853410312
+具体链接：<https://juejin.cn/post/6969401491853410312>
