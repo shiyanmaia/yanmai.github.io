@@ -19,7 +19,7 @@ script:
 after_script:
   - cd ./public
   - git init
-  - git config user.name "heyichen"
+  - git config user.name "travis-ci"
   - git config user.email "heyichenn@foxmail.com"
   - git add .
   - git commit -m "Travis CI Auto Builder at `date +"%Y-%m-%d %H:%M"`"  # 提交记录包含时间 跟上面更改时区配合
