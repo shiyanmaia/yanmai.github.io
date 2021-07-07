@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="hyc">
+  <meta name="keywords" content="">
+  <title>vue-element-admin后台权限 - 卫龙小面筋</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_yg9cfy8wd6.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_pjno9b9zyxs.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 60vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>卫龙小面筋</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.1)">
+          <div class="container text-center white-text fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2021-05-19 20:23">
+      2021年5月19日 晚上
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.3k 字
+    </span>
+  
+
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <p>★主要学习文档：<a href="https://juejin.cn/post/6844903478880370701" target="_blank" rel="noopener">https://juejin.cn/post/6844903478880370701</a></p>
+<a id="more"></a>
+
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><hr>
+<ul>
+<li>创建vue实例的时候将vue-router挂载，但这个时候vue-router挂载一些登录或者不用权限的公用的页面。</li>
+<li>当用户登录后，获取用role，将role和路由表每个页面的需要的权限作比较，生成最终用户可访问的路由表。</li>
+<li>调用router.addRoutes(store.getters.addRouters)添加用户可访问的路由。</li>
+<li>使用vuex管理路由表，根据vuex中可访问的路由渲染侧边栏组件。</li>
+</ul>
+<h3 id="router-js"><a href="#router-js" class="headerlink" title="router.js"></a>router.js</h3><hr>
+<p>首先我们实现router.js路由表，这里就拿前端控制路由来举例(后端存储的也差不多，稍微改造一下就好了)</p>
+<pre><code class="hljs js"><span class="hljs-comment">// router.js</span>
+<span class="hljs-keyword">import</span> Vue <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue&#x27;</span>;
+<span class="hljs-keyword">import</span> Router <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;vue-router&#x27;</span>;
+
+<span class="hljs-keyword">import</span> Login <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;../views/login/&#x27;</span>;
+<span class="hljs-keyword">const</span> dashboard = <span class="hljs-function"><span class="hljs-params">resolve</span> =&gt;</span> <span class="hljs-built_in">require</span>([<span class="hljs-string">&#x27;../views/dashboard/index&#x27;</span>], resolve);
+<span class="hljs-comment">//使用了vue-routerd的[Lazy Loading Routes</span>
+](https:<span class="hljs-comment">//router.vuejs.org/en/advanced/lazy-loading.html)</span>
+
+<span class="hljs-comment">//所有权限通用路由表 </span>
+<span class="hljs-comment">//如首页和登录页和一些不用权限的公用页面</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> constantRouterMap = [
+  &#123; <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/login&#x27;</span>, <span class="hljs-attr">component</span>: Login &#125;,
+  &#123;
+    path: <span class="hljs-string">&#x27;/&#x27;</span>,
+    component: Layout,
+    redirect: <span class="hljs-string">&#x27;/dashboard&#x27;</span>,
+    name: <span class="hljs-string">&#x27;首页&#x27;</span>,
+    children: [&#123; <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;dashboard&#x27;</span>, <span class="hljs-attr">component</span>: dashboard &#125;]
+  &#125;,
+]
+
+<span class="hljs-comment">//实例化vue的时候只挂载constantRouter</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-keyword">new</span> Router(&#123;
+  routes: constantRouterMap
+&#125;);
+
+<span class="hljs-comment">//异步挂载的路由</span>
+<span class="hljs-comment">//动态需要根据权限加载的路由表 </span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> asyncRouterMap = [
+  &#123;
+    path: <span class="hljs-string">&#x27;/permission&#x27;</span>,
+    component: Layout,
+    name: <span class="hljs-string">&#x27;权限测试&#x27;</span>,
+    meta: &#123; <span class="hljs-attr">role</span>: [<span class="hljs-string">&#x27;admin&#x27;</span>,<span class="hljs-string">&#x27;super_editor&#x27;</span>] &#125;, <span class="hljs-comment">//页面需要的权限</span>
+    children: [
+    &#123; 
+      path: <span class="hljs-string">&#x27;index&#x27;</span>,
+      component: Permission,
+      name: <span class="hljs-string">&#x27;权限测试页&#x27;</span>,
+      meta: &#123; <span class="hljs-attr">role</span>: [<span class="hljs-string">&#x27;admin&#x27;</span>,<span class="hljs-string">&#x27;super_editor&#x27;</span>] &#125;  <span class="hljs-comment">//页面需要的权限</span>
+    &#125;]
+  &#125;,
+  &#123; <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;*&#x27;</span>, <span class="hljs-attr">redirect</span>: <span class="hljs-string">&#x27;/404&#x27;</span>, <span class="hljs-attr">hidden</span>: <span class="hljs-literal">true</span> &#125;
+];</code></pre>
+
+<p>这里我们根据 <a href="https://router.vuejs.org/en/advanced/meta.html" target="_blank" rel="noopener">vue-router官方推荐</a> 的方法通过meta标签来标示改页面能访问的权限有哪些。如<code>meta: { role: [&#39;admin&#39;,&#39;super_editor&#39;] }</code>表示该页面只有admin和超级编辑才能有资格进入。</p>
+<p><strong>注意事项</strong>：这里有一个需要非常注意的地方就是 <code>404</code> 页面一定要最后加载，如果放在<code>constantRouterMap</code>一同声明了<code>404</code>，后面的所以页面都会被拦截到<code>404</code>，详细的问题见<a href="https://github.com/vuejs/vue-router/issues/1176" target="_blank" rel="noopener">addRoutes when you’ve got a wildcard route for 404s does not work</a></p>
+<h3 id="main-js"><a href="#main-js" class="headerlink" title="main.js"></a>main.js</h3><hr>
+<p><strong>关键的main.js</strong></p>
+<pre><code class="hljs js"><span class="hljs-comment">// main.js</span>
+router.beforeEach(<span class="hljs-function">(<span class="hljs-params">to, <span class="hljs-keyword">from</span>, next</span>) =&gt;</span> &#123;
+  <span class="hljs-keyword">if</span> (store.getters.token) &#123; <span class="hljs-comment">// 判断是否有token</span>
+    <span class="hljs-keyword">if</span> (to.path === <span class="hljs-string">&#x27;/login&#x27;</span>) &#123;
+      next(&#123; <span class="hljs-attr">path</span>: <span class="hljs-string">&#x27;/&#x27;</span> &#125;);
+    &#125; <span class="hljs-keyword">else</span> &#123;
+      <span class="hljs-keyword">if</span> (store.getters.roles.length === <span class="hljs-number">0</span>) &#123; <span class="hljs-comment">// 判断当前用户是否已拉取完user_info信息</span>
+        store.dispatch(<span class="hljs-string">&#x27;GetInfo&#x27;</span>).then(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> &#123; <span class="hljs-comment">// 拉取info</span>
+          <span class="hljs-keyword">const</span> roles = res.data.role;
+          store.dispatch(<span class="hljs-string">&#x27;GenerateRoutes&#x27;</span>, &#123; roles &#125;).then(<span class="hljs-function">() =&gt;</span> &#123; <span class="hljs-comment">// 生成可访问的路由表</span>
+            router.addRoutes(store.getters.addRouters) <span class="hljs-comment">// 动态添加可访问路由表</span>
+            next(&#123; ...to, <span class="hljs-attr">replace</span>: <span class="hljs-literal">true</span> &#125;) <span class="hljs-comment">// hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record</span>
+          &#125;)
+        &#125;).catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> &#123;
+          <span class="hljs-built_in">console</span>.log(err);
+        &#125;);
+      &#125; <span class="hljs-keyword">else</span> &#123;
+        next() <span class="hljs-comment">//当有用户权限的时候，说明所有可访问路由已生成 如访问没权限的全面会自动进入404页面</span>
+      &#125;
+    &#125;
+  &#125; <span class="hljs-keyword">else</span> &#123;
+    <span class="hljs-keyword">if</span> (whiteList.indexOf(to.path) !== -<span class="hljs-number">1</span>) &#123; <span class="hljs-comment">// 在免登录白名单，直接进入</span>
+      next();
+    &#125; <span class="hljs-keyword">else</span> &#123;
+      next(<span class="hljs-string">&#x27;/login&#x27;</span>); <span class="hljs-comment">// 否则全部重定向到登录页</span>
+    &#125;
+  &#125;
+&#125;);</code></pre>
+
+<h3 id="store-permission-js"><a href="#store-permission-js" class="headerlink" title="store/permission.js"></a>store/permission.js</h3><pre><code class="hljs js"><span class="hljs-comment">// store/permission.js</span>
+<span class="hljs-keyword">import</span> &#123; asyncRouterMap, constantRouterMap &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;src/router&#x27;</span>;
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">hasPermission</span>(<span class="hljs-params">roles, route</span>) </span>&#123;
+  <span class="hljs-keyword">if</span> (route.meta &amp;&amp; route.meta.role) &#123;
+    <span class="hljs-keyword">return</span> roles.some(<span class="hljs-function"><span class="hljs-params">role</span> =&gt;</span> route.meta.role.indexOf(role) &gt;= <span class="hljs-number">0</span>)
+  &#125; <span class="hljs-keyword">else</span> &#123;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>
+  &#125;
+&#125;
+
+<span class="hljs-keyword">const</span> permission = &#123;
+  state: &#123;
+    routers: constantRouterMap,
+    addRouters: []
+  &#125;,
+  mutations: &#123;
+    SET_ROUTERS: <span class="hljs-function">(<span class="hljs-params">state, routers</span>) =&gt;</span> &#123;
+      state.addRouters = routers;
+      state.routers = constantRouterMap.concat(routers);
+    &#125;
+  &#125;,
+  actions: &#123;
+    <span class="hljs-function"><span class="hljs-title">GenerateRoutes</span>(<span class="hljs-params">&#123; commit &#125;, data</span>)</span> &#123;
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function"><span class="hljs-params">resolve</span> =&gt;</span> &#123;
+        <span class="hljs-keyword">const</span> &#123; roles &#125; = data;
+        <span class="hljs-keyword">const</span> accessedRouters = asyncRouterMap.filter(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> &#123;
+          <span class="hljs-keyword">if</span> (roles.indexOf(<span class="hljs-string">&#x27;admin&#x27;</span>) &gt;= <span class="hljs-number">0</span>) <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+          <span class="hljs-keyword">if</span> (hasPermission(roles, v)) &#123;
+            <span class="hljs-keyword">if</span> (v.children &amp;&amp; v.children.length &gt; <span class="hljs-number">0</span>) &#123;
+              v.children = v.children.filter(<span class="hljs-function"><span class="hljs-params">child</span> =&gt;</span> &#123;
+                <span class="hljs-keyword">if</span> (hasPermission(roles, child)) &#123;
+                  <span class="hljs-keyword">return</span> child
+                &#125;
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+              &#125;);
+              <span class="hljs-keyword">return</span> v
+            &#125; <span class="hljs-keyword">else</span> &#123;
+              <span class="hljs-keyword">return</span> v
+            &#125;
+          &#125;
+          <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        &#125;);
+        commit(<span class="hljs-string">&#x27;SET_ROUTERS&#x27;</span>, accessedRouters);
+        resolve();
+      &#125;)
+    &#125;
+  &#125;
+&#125;;
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> permission;</code></pre>
+
+<p>这里的代码说白了就是干了一件事，通过用户的权限和之前在router.js里面asyncRouterMap的每一个页面所需要的权限做匹配，最后返回一个该用户能够访问路由有哪些。</p>
+<h3 id="侧边栏"><a href="#侧边栏" class="headerlink" title="侧边栏"></a>侧边栏</h3><hr>
+<p>最后一个涉及到权限的地方就是侧边栏，不过在前面的基础上已经很方便就能实现动态显示侧边栏了。这里侧边栏基于element-ui的NavMenu来实现的。 代码有点多不贴详细的代码了，有兴趣的可以直接去github上看<a href="https://github.com/PanJiaChen/vue-element-admin/tree/master/src/views/layout/components/Sidebar" target="_blank" rel="noopener">地址</a>，或者直接看关于侧边栏的<a href="https://panjiachen.github.io/vue-element-admin-site/#/router-and-nav" target="_blank" rel="noopener">文档</a>。</p>
+<p>说白了就是遍历之前算出来的<code>permission_routers</code>，通过vuex拿到之后动态v-for渲染而已。不过这里因为有一些业务需求所以加了很多判断 比如我们在定义路由的时候会加很多参数</p>
+<pre><code class="hljs js"><span class="hljs-comment">/**</span>
+<span class="hljs-comment">* hidden: true                   if `hidden:true` will not show in the sidebar(default is false)</span>
+<span class="hljs-comment">* redirect: noredirect           if `redirect:noredirect` will no redirct in the breadcrumb</span>
+<span class="hljs-comment">* name:&#x27;router-name&#x27;             the name is used by &lt;keep-alive&gt; (must set!!!)</span>
+<span class="hljs-comment">* meta : &#123;</span>
+<span class="hljs-comment">   role: [&#x27;admin&#x27;,&#x27;editor&#x27;]     will control the page role (you can set multiple roles)</span>
+<span class="hljs-comment">   title: &#x27;title&#x27;               the name show in submenu and breadcrumb (recommend set)</span>
+<span class="hljs-comment">   icon: &#x27;svg-name&#x27;             the icon show in the sidebar,</span>
+<span class="hljs-comment">   noCache: true                if fasle ,the page will no be cached(default is false)</span>
+<span class="hljs-comment"> &#125;</span>
+<span class="hljs-comment">**/</span></code></pre>
+
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/05/24/sortquchong/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">前端去除数组中重复对象</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/19/workbreak/">
+                        <span class="hidden-mobile">前端设置内容超出自动换行</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+    <!-- APlayer 音乐播放器 -->
+    <div id="aplayer"></div>
+    <script defer src="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.js" ></script>
+<link  rel="stylesheet" href="https://cdn.staticfile.org/aplayer/1.10.1/APlayer.min.css" />
+<script type="text/javascript">
+  var oldLoadAp = window.onload;
+  window.onload = function () {
+    oldLoadAp && oldLoadAp();
+
+    new APlayer({
+      container: document.getElementById('aplayer'),
+      fixed: true,
+      autoplay: 'false' === 'true',
+      loop: 'all',
+      order: 'random',
+      theme: '#3c4858',
+      preload: 'none',
+      audio: [{"name":"Mood (Lil Ghost Remix)","artist":"24kGoldn/iann dior/Lil Ghost","url":"/music/mood.m4a","cover":"/img/avatar.png"}]
+    });
+  }
+</script>
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "vue-element-admin后台权限&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
